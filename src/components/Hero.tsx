@@ -1,7 +1,49 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-portrait.jpg';
+import heroImage from '@/assets/Md Abu Faisal.jpg';
+
+// Simple in-view count up component
+const CountUpNumber = ({ end, duration = 1500, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
+  const [value, setValue] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const start = performance.now();
+    const animate = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const current = Math.floor(progress * end);
+      setValue(current);
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    const r = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(r);
+  }, [started, end, duration]);
+
+  return (
+    <span ref={ref}>
+      {value}
+      {suffix}
+    </span>
+  );
+};
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
@@ -41,7 +83,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center pt-20 pb-16">
+    <section id="home" className="relative min-h-screen flex items-center pt-28 md:pt-32 pb-16">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -90,19 +132,54 @@ const Hero = () => {
               </Button>
             </div>
 
-            {/* Quick Stats */}
-            <div className="flex gap-8 pt-8 border-t border-border-light">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">5+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
+            {/* Colorful Animated Stats */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-8 border-t border-border-light">
+              <div className="text-center group cursor-pointer">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500 animate-pulse"></div>
+                  <div className="relative bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-4 border border-emerald-200/50 group-hover:scale-105 transition-all duration-300">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent animate-bounce">
+                      <CountUpNumber end={150} suffix="+" />
+                    </div>
+                    <div className="text-sm text-emerald-700/80 font-medium">Happy Clients</div>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">150+</div>
-                <div className="text-sm text-muted-foreground">Projects Completed</div>
+              
+              <div className="text-center group cursor-pointer">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500 animate-pulse"></div>
+                  <div className="relative bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-200/50 group-hover:scale-105 transition-all duration-300">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent animate-bounce" style={{animationDelay: '0.2s'}}>
+                      <CountUpNumber end={200} suffix="+" />
+                    </div>
+                    <div className="text-sm text-blue-700/80 font-medium">Projects Completed</div>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">98%</div>
-                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+              
+              <div className="text-center group cursor-pointer">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500 animate-pulse"></div>
+                  <div className="relative bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-200/50 group-hover:scale-105 transition-all duration-300">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-bounce" style={{animationDelay: '0.4s'}}>
+                      <CountUpNumber end={5} suffix="+" />
+                    </div>
+                    <div className="text-sm text-purple-700/80 font-medium">Years of Experience</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center group cursor-pointer">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-all duration-500 animate-pulse"></div>
+                  <div className="relative bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-4 border border-orange-200/50 group-hover:scale-105 transition-all duration-300">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent animate-bounce" style={{animationDelay: '0.6s'}}>
+                      <CountUpNumber end={25} suffix="+" />
+                    </div>
+                    <div className="text-sm text-orange-700/80 font-medium">Awards Won</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

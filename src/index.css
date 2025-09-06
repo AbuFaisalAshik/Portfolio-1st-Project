@@ -7,41 +7,47 @@
 
 @layer base {
   :root {
-    /* Natural color palette */
-    --background: 0 0% 99%;
-    --foreground: 220 15% 15%;
+    /* Nature-inspired white backgrounds */
+    --background: 0 0% 100%;
+    --foreground: 210 20% 15%;
     
-    /* Primary brand colors - soft blue-gray */
-    --primary: 215 25% 27%;
-    --primary-light: 215 20% 40%;
-    --primary-foreground: 0 0% 98%;
+    /* Global green primary colors updated to #008000 */
+    /* #008000 => hsl(120, 100%, 25%) */
+    --primary: 120 100% 25%;
+    --primary-light: 120 90% 35%;
+    --primary-dark: 120 100% 20%;
+    --primary-foreground: 0 0% 100%;
     
-    /* Secondary accents - warm natural tones */
-    --secondary: 45 15% 95%;
-    --secondary-foreground: 215 25% 27%;
+    /* Natural secondary tones */
+    --secondary: 120 15% 95%;
+    --secondary-foreground: 210 20% 15%;
     
-    /* Accent colors for highlights */
-    --accent: 142 35% 85%;
-    --accent-foreground: 215 25% 27%;
-    --accent-vibrant: 142 45% 55%;
+    /* Nature accent colors - leaf greens and ocean blues */
+    --accent: 160 50% 70%;
+    --accent-foreground: 210 20% 15%;
+    --accent-vibrant: 160 60% 50%;
+    --accent-ocean: 200 80% 60%;
+    --accent-leaf: 140 60% 55%;
     
-    /* Muted tones */
-    --muted: 220 10% 96%;
-    --muted-foreground: 220 8% 45%;
+    /* Soft natural tones */
+    --muted: 210 10% 98%;
+    --muted-foreground: 210 15% 50%;
     
-    /* Interactive states */
-    --hover: 215 20% 35%;
-    --active: 215 30% 25%;
+    /* Interactive states tuned for new green */
+    --hover: 120 100% 22%;
+    --active: 120 100% 18%;
     
-    /* Soft shadows and borders */
-    --border: 220 15% 90%;
-    --border-light: 220 10% 94%;
-    --shadow: 220 25% 25%;
+    /* Clean borders and shadows */
+    --border: 210 15% 92%;
+    --border-light: 210 10% 96%;
+    --shadow: 210 25% 20%;
     
-    /* Natural gradients */
+    /* Nature-inspired gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-light)) 100%);
+    --gradient-ocean: linear-gradient(135deg, hsl(var(--accent-ocean)) 0%, hsl(var(--primary)) 100%);
+    --gradient-nature: linear-gradient(135deg, hsl(var(--accent-leaf)) 0%, hsl(var(--accent)) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-vibrant)) 100%);
+    --gradient-wave: linear-gradient(45deg, hsl(var(--primary-light)) 0%, hsl(var(--accent-ocean)) 50%, hsl(var(--primary)) 100%);
     
     /* Organic border radius system */
     --radius-sm: 0.75rem;
@@ -251,6 +257,29 @@
     100% { transform: translateY(0); opacity: 1; }
   }
 
+  @keyframes wave {
+    0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+    25% { transform: translateX(5px) translateY(-5px) rotate(1deg); }
+    50% { transform: translateX(-5px) translateY(-10px) rotate(-1deg); }
+    75% { transform: translateX(-5px) translateY(-5px) rotate(1deg); }
+  }
+
+  @keyframes ripple {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+  }
+
+  @keyframes leafFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-15px) rotate(5deg); }
+    66% { transform: translateY(-8px) rotate(-3deg); }
+  }
+
+  @keyframes windSway {
+    0%, 100% { transform: translateX(0px) skewX(0deg); }
+    50% { transform: translateX(10px) skewX(2deg); }
+  }
+
   /* Gradient utilities */
   .bg-gradient-primary {
     background: var(--gradient-primary);
@@ -262,6 +291,18 @@
 
   .bg-gradient-accent {
     background: var(--gradient-accent);
+  }
+
+  .bg-gradient-ocean {
+    background: var(--gradient-ocean);
+  }
+
+  .bg-gradient-nature {
+    background: var(--gradient-nature);
+  }
+
+  .bg-gradient-wave {
+    background: var(--gradient-wave);
   }
 
   /* Border radius utilities */

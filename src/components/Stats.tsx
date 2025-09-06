@@ -71,18 +71,33 @@ const Stats = () => {
     }, [isVisible, target, duration]);
 
     return (
-      <span className="text-4xl md:text-5xl font-bold text-primary">
+      <span className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-sky-600 to-blue-600">
         {Math.floor(current)}{suffix}
       </span>
     );
   };
 
   return (
-    <section className="py-24">
-      <div className="container mx-auto px-6">
+    <section className="py-24 relative overflow-hidden mx-6 rounded-3xl bg-gradient-to-br from-emerald-50 via-sky-50 to-white">
+      {/* Subtle pattern overlay */}
+      <div
+        className="absolute inset-0 opacity-40 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 25px 25px, rgba(16,185,129,0.15) 2px, transparent 0),
+                           radial-gradient(circle at 75px 75px, rgba(59,130,246,0.15) 2px, transparent 0)`,
+          backgroundSize: '100px 100px'
+        }}
+      />
+
+      {/* Floating blobs */}
+      <div className="absolute -top-10 -left-10 w-56 h-56 bg-emerald-200/40 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute -bottom-12 left-1/3 w-64 h-64 bg-sky-200/40 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute -right-16 top-10 w-72 h-72 bg-blue-200/40 rounded-full blur-3xl animate-pulse" />
+
+      <div className="container mx-auto px-6 relative">
         <div 
           ref={statsRef}
-          className="stats-container p-12 shadow-organic border border-border-light"
+          className="relative p-12 bg-white/70 backdrop-blur-md rounded-3xl shadow-xl ring-1 ring-emerald-100"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
@@ -96,10 +111,10 @@ const Stats = () => {
                   }}
                 >
                   <div className="relative inline-block">
-                    <div className="w-20 h-20 bg-gradient-accent rounded-organic flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="h-10 w-10 text-primary" />
+                    <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 bg-white/80 ring-2 ring-emerald-200 shadow-md">
+                      <Icon className="h-10 w-10 text-emerald-600" />
                     </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full opacity-80 group-hover:animate-bounce"></div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-400 rounded-full opacity-80 group-hover:animate-bounce"></div>
                   </div>
                   
                   <div className="space-y-2">
@@ -107,7 +122,7 @@ const Stats = () => {
                       target={stat.number} 
                       suffix={stat.suffix}
                     />
-                    <p className="text-muted-foreground font-medium">
+                    <p className="text-slate-600 font-medium">
                       {stat.label}
                     </p>
                   </div>
@@ -117,8 +132,8 @@ const Stats = () => {
           </div>
 
           {/* Background decorative elements */}
-          <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-primary rounded-organic opacity-5 -z-10"></div>
-          <div className="absolute bottom-4 left-4 w-24 h-24 bg-gradient-accent rounded-organic opacity-10 -z-10"></div>
+          <div className="absolute top-4 right-4 w-32 h-32 bg-emerald-300 rounded-3xl opacity-10 -z-10"></div>
+          <div className="absolute bottom-4 left-4 w-24 h-24 bg-sky-300 rounded-3xl opacity-10 -z-10"></div>
         </div>
       </div>
     </section>
